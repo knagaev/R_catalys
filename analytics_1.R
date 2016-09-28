@@ -1,6 +1,10 @@
 library(readxl)
 library(dplyr)
 library(tidyr)
+library(magrittr)
+library(purrr)
+library(stringr)
+library(tibble)
 
 col_types <- readxl:::xlsx_col_types("../catalys/merged_master_families_matrix_ver_0_13.xlsx")
 mmfm <- read_excel("../catalys/merged_master_families_matrix_ver_0_13.xlsx", sheet = "merged_master_families_matrix", col_types=col_types)
