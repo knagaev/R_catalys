@@ -1,46 +1,16 @@
-library(dplyr)
-library(lubridate)
-library(tidyr)
-library(magrittr)
-library(purrr)
-library(stringr)
-library(tibble)
-library(readxl)
+#library(dplyr)
+#library(lubridate)
+#library(tidyr)
+#library(magrittr)
+#library(purrr)
+#library(stringr)
+#library(tibble)
+#library(readxl)
 
-
-load_excel_sheet <- function(excel_file_name, excel_sheet_name)
-{
-  
-  sheets <- readxl::excel_sheets(excel_file_name)
-  
-  sheet_num <- match(excel_sheet_name, sheets) - 1
-  col_types <- readxl:::xlsx_col_types(excel_file_name, 
-                                       sheet = sheet_num)
-  df <- read_excel(excel_file_name, 
-                   sheet = excel_sheet_name, 
-                   col_types = rep("text", length(col_types)))
-  
-}
+source("helpers.R")
 
 mmfm <- load_excel_sheet("merged_master_families_matrix_ver_0_13.xlsx", "merged_master_families_matrix")
 
-
-# хак по считыванию типов колонок
-col_types <- readxl:::xlsx_col_types("merged_master_families_matrix_ver_0_13.xlsx")
-col_types <- rep("text", length(col_types))
-mmfm <- read_excel("merged_master_families_matrix_ver_0_13.xlsx", 
-                   sheet = "merged_master_families_matrix", 
-                   col_types = col_types)
-# имеем проблему, колонки с NA вместо имени
-
-# можно писать в одно преобразование, но специально разбил на шаги
-# трансформируем колонки
-df0 <- mmfm %>%
-  repair_names(prefix = "repaired_", sep = "")
-
-# теперь удалим колонки, которые имели кривые имена (NA)
-df1 <- df0 %>%
-  select(-starts_with("repaired_"))
 
 # с датами тоже проблема, поскольку их пишут от произвольно, либо дата, либо строка '20121231', 
 # а excel еще и сам преобразует даты в числа.
