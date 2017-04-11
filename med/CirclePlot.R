@@ -1,4 +1,7 @@
 library(tidyverse)
+library(reshape2)
+library(forcats)
+require(edgebundleR)
 
 med_dat <- tribble(
   ~Sector, ~Резиденты, ~Нерезиденты,
@@ -20,17 +23,19 @@ med_dat <- tribble(
 
 med_dat2 <- melt(med_dat, id.vars = "Sector")
 
+rat_colors <- c("lightgoldenrod1", "lightgoldenrod3")
 
 ggplot(med_dat2, 
        aes(#x=Sector,
          x=fct_reorder2(Sector, variable, value, .desc = FALSE),
          y=value,
          fill=variable)) + 
-  geom_bar(stat="identity") +
+  geom_bar(stat="identity", width=.7) +
   labs(x = NULL, y = NULL) +
-  guides(fill=FALSE) +
+  guides(fill=guide_legend(title=NULL)) +
   theme_bw() +
-  #scale_x_discrete(expand = c(.5, 0)) +
+  scale_fill_manual(values=rat_colors) + 
+  scale_x_discrete(expand = c(.4, 0)) +
   scale_y_continuous(limits = c(-500, 2600)) +
   coord_polar(start = pi)
 
@@ -40,13 +45,14 @@ ggplot(med_dat2,
          x=fct_reorder2(Sector, variable, value, .desc = FALSE),
          y=value,
          fill=variable)) + 
-  geom_bar(stat="identity") +
+  geom_bar(stat="identity", width=.7) +
   labs(x = NULL, y = NULL) +
-  guides(fill=FALSE) +
+  guides(fill=guide_legend(title=NULL)) +
   theme_bw() +
+  scale_fill_manual(values=rat_colors) + 
   #scale_x_discrete(expand = c(.5, 0)) +
   #scale_y_continuous(limits = c(-500, 2600)) +
-  scale_y_reverse() +
+  scale_y_reverse(limits = c(3000, 0)) +
   coord_polar(start = pi)
 
 
@@ -70,19 +76,24 @@ med_dat_rat <- tribble(
 
 med_dat2_rat <- melt(med_dat_rat, id.vars = "Sector")
 
+rat_colors <- c("lightgoldenrod1", "lightgoldenrod3")
+
 ggplot(med_dat2_rat, 
        aes(#x=Sector,
-           x=fct_reorder2(Sector, variable, value),
+           x=fct_reorder2(factor(Sector), variable, value),
            y=value,
-           fill=variable)) + 
-  geom_bar(stat="identity") +
+           fill=factor(variable))) + 
+  geom_bar(stat="identity", width=.7) +
   labs(x = NULL, y = NULL) +
-  guides(fill=FALSE) +
+  guides(fill=guide_legend(title=NULL)) +
   theme_bw() +
-  scale_x_discrete(expand = c(.5, 0)) +
-  scale_y_continuous(limits = c(-10, 110)) +
+  scale_fill_manual(values=rat_colors) + 
+  #scale_x_discrete(expand = c(.5, 0)) +
+  scale_y_continuous(limits = c(-20, 100), labels=NULL, breaks = NULL) +
+  geom_text(aes(label=value), size = 3, position = position_stack(vjust = 0.5)) +
   coord_polar(start = pi)
-  
+
+
   #scale_y_continuous(limits = c(2600, -500)) +
   # + theme(axis.text.x = element_text(angle = 90, hjust = 1))
   # + theme(axis.text.x=element_text(vjust=1,hjust=0))
