@@ -1,0 +1,5 @@
+11.0
+3
+1 SQLNCHAR 0 0 ",\0\"\0" 1 appln_id ""
+2 SQLNCHAR 0 0 "\"\0,\0\"\0" 0 appln_title_lg SQL_Latin1_General_CP1_CI_AS
+3 SQLNCHAR 0 0 "\"\0\r\0\n\0" 2 appln_title SQL_Latin1_General_CP1_CI_AS

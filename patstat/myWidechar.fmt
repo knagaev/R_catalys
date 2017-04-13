@@ -1,0 +1,7 @@
+11.0
+5
+1       SQLNCHAR            0       14      "\t\0"       1     PersonID                     ""
+2       SQLNCHAR            0       50      "\t\0"       2     FirstName                    Cyrillic_General_CI_AS
+3       SQLNCHAR            0       60      "\t\0"       3     LastName                     Cyrillic_General_CI_AS
+4       SQLNCHAR            0       22      "\t\0"       4     BirthDate                    ""
+5       SQLNCHAR            0       60      "\r\0\n\0"   5     AnnualSalary                 ""
