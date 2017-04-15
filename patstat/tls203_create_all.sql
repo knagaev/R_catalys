@@ -6,10 +6,10 @@ insert into @langs (lang)
 	select 'ar' union
 	select 'bg' union
 	select 'cs' union
---	select 'da' union
+	select 'da' union
 	select 'de' union
 	select 'el' union
---	select 'en' union
+	select 'en' union
 	select 'es' union
 	select 'et' union
 	select 'fr' union
@@ -17,7 +17,7 @@ insert into @langs (lang)
 	select 'it' union
 	select 'ja' union
 	select 'ko' union
---	select 'lt' union
+	select 'lt' union
 	select 'lv' union
 	select 'nl' union
 	select 'no' union

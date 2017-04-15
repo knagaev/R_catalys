@@ -7,7 +7,7 @@ GO
 -- Create date: 15.04.2014
 -- Description:	Загрузка tls_203 Patstat
 -- =============================================
-CREATE PROCEDURE SP_LOAD_TLS_203 
+CREATE PROCEDURE SP_CREATE_TLS_203 
 	@lang varchar(2),
 	@db varchar(50) = 'patstat2016b' 
 AS
