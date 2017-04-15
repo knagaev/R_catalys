@@ -1,9 +1,10 @@
 
 ##########
 import os, os.path, codecs
+table_name = 'tls203'
 
-main_path = 'C:/work/others/Patstat/!1/'
-processed_path = 'C:/work/others/Patstat/!1/processed/'
+main_path = 'G:/Patstat/Patstat Biblio/data_PATSTAT_Biblio_2016_Autumn/' + table_name
+processed_path = 'G:/Patstat/Patstat Biblio/data_PATSTAT_Biblio_2016_Autumn/' + table_name + '/processed/'
 d = dict()
 dest = dict()
 
@@ -16,7 +17,8 @@ for fname in (f for f in os.listdir(main_path) if os.path.isfile(os.path.join(ma
       st = l.find(',"')
       if st == -1:
         continue
-      out_file_name = os.path.splitext(fname)[0] + '_' + l[st+2: st+4] + '.txt'
+      #out_file_name = os.path.splitext(fname)[0] + '_' + l[st+2: st+4] + '.txt'
+      out_file_name = table_name + '_' + l[st+2: st+4] + '.txt'
       if not out_file_name in d:
         d[out_file_name] = list()
         dest[out_file_name] = open(os.path.join(processed_path, out_file_name), 'w', encoding="utf-16")
@@ -31,7 +33,7 @@ for fname in (f for f in os.listdir(main_path) if os.path.isfile(os.path.join(ma
           for l in d[out_file_name]:
             dest[out_file_name].write(l)
           d[out_file_name] = list()
-          w.close()
+          #w.close()
 
     for out_file_name in d:
       for l in d[out_file_name]:

@@ -25,7 +25,7 @@ select @begin = getdate()
 select @begin
 
 BULK INSERT [dbo].tls203_appln_abstr_en
-FROM 'C:\work\others\Patstat\!1\processed\tls203_part02_en.txt'
+FROM 'G:\Patstat\Patstat Biblio\data_PATSTAT_Biblio_2016_Autumn\tls203\processed\tls203_en.txt'
 WITH
 (
 BATCHSIZE = 20000, 
@@ -35,7 +35,7 @@ BATCHSIZE = 20000,
 -- 10000  0,00130119598765432
 -- 1000   0,00194074074074074
 DATAFILETYPE = 'char',
-FORMATFILE = 'C:\work\others\Patstat\tls203.fmt'
+FORMATFILE = 'C:\PLR\R_catalys\patstat\tls203.fmt'
 )
 
 select getdate()
@@ -57,6 +57,7 @@ CREATE FULLTEXT INDEX ON [patstat2016b].[dbo].tls203_appln_abstr_en
  (   
   appln_abstract  
      Language English     
+	STATISTICAL_SEMANTICS 
  )   
   KEY INDEX PK_tls203_appln_abstr_en   
       ON FT_CATALOG;
