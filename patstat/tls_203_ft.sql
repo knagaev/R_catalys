@@ -22,8 +22,7 @@ CREATE FULLTEXT CATALOG tls_ft
 	AS DEFAULT
 GO
 
-/*** создание индексов ***/
-
+/*** создание индексов 
 CREATE FULLTEXT INDEX ON tls203_appln_abstr_en
 	(   
 	  appln_abstract  
@@ -36,8 +35,9 @@ CREATE FULLTEXT INDEX ON tls203_appln_abstr_en
 GO
 
 ALTER FULLTEXT INDEX ON tls203_appln_abstr_en 
-   START FULL POPULATION;
+   START UPDATE POPULATION;
 GO
+***/
 
 -- проверка статуса процесса создания FT индекса
 DECLARE @CatalogName VARCHAR(MAX)

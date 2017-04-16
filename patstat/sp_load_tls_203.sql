@@ -24,7 +24,7 @@ BEGIN
 
 
 	DECLARE @SQLString VARCHAR(MAX)
-	SET @SQLString = 'BULK INSERT [dbo].tls203_appln_abstr_en
+	SET @SQLString = 'BULK INSERT [dbo].tls203_appln_abstr_' + @lang + '
 		FROM ''' + @datafile + '\tls203_' + @lang + '.txt''
 		WITH
 		(
