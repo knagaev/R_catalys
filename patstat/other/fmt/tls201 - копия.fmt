@@ -1,0 +1,28 @@
+11.0
+26
+1 SQLCHAR 0 4 ",\"" 1 appln_id ""
+2 SQLCHAR 0 2 "\",\"" 2 appln_auth SQL_Latin1_General_CP1_CI_AS
+3 SQLCHAR 0 15 "\",\"" 3 appln_nr SQL_Latin1_General_CP1_CI_AS
+4 SQLCHAR 0 2 "\"," 4 appln_kind SQL_Latin1_General_CP1_CI_AS
+5 SQLCHAR 0 3 "," 5 appln_filing_date ""
+6 SQLCHAR 0 2 ",\"" 6 appln_filing_year ""
+7 SQLCHAR 0 20 "\",\"" 7 appln_nr_epodoc SQL_Latin1_General_CP1_CI_AS
+8 SQLCHAR 0 100 "\",\"" 8 appln_nr_original SQL_Latin1_General_CP1_CI_AS
+9 SQLCHAR 0 2 "\"," 9 ipr_type SQL_Latin1_General_CP1_CI_AS
+10 SQLCHAR 0 4 "," 10 internat_appln_id ""
+11 SQLCHAR 0 1 "," 11 int_phase SQL_Latin1_General_CP1_CI_AS
+12 SQLCHAR 0 1 "," 12 reg_phase SQL_Latin1_General_CP1_CI_AS
+13 SQLCHAR 0 1 "," 13 nat_phase SQL_Latin1_General_CP1_CI_AS
+14 SQLCHAR 0 3 "," 14 earliest_filing_date ""
+15 SQLCHAR 0 2 "," 15 earliest_filing_year ""
+16 SQLCHAR 0 4 "," 16 earliest_filing_id ""
+17 SQLCHAR 0 3 "," 17 earliest_publn_date ""
+18 SQLCHAR 0 2 "," 18 earliest_publn_year ""
+19 SQLCHAR 0 4 "," 19 earliest_pat_publn_id ""
+20 SQLCHAR 0 1 "," 20 granted ""
+21 SQLCHAR 0 4 "," 21 docdb_family_id ""
+22 SQLCHAR 0 4 "," 22 inpadoc_family_id ""
+23 SQLCHAR 0 2 "," 23 docdb_family_size ""
+24 SQLCHAR 0 2 "," 24 nb_citing_docdb_fam ""
+25 SQLCHAR 0 2 "," 25 nb_applicants ""
+26 SQLCHAR 0 2 "" 26 nb_inventors ""
