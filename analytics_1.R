@@ -8,8 +8,8 @@ library(stringr)
 library(tibble)
 library(ggplot2)
 
-mm_file_name <- "C:/PLR/catalys/ВТД.Collection_Matrix_Baseline4.xlsx"
-facets_file_name <- "C:/PLR/catalys/facets_VTD.csv"
+mm_file_name <- "ВТД.Collection_Matrix_Baseline4.xlsx"
+facets_file_name <- "facets_VTD.csv"
 
 #mm_col_types <- readxl:::xlsx_col_types(mm_file_name)
 #tb_merged_matrix <- readxl::read_excel(mm_file_name, sheet = 'merged_master_families_matrix', col_types = mm_col_types)
@@ -34,26 +34,36 @@ tb_full_years <- as_tibble(expand.grid(OldPriorYear = as.character(seq(from = mi
 tb_heat_years<-
   tb_merged_matrix %>% 
     select(OldPriorYear, matches("[1-9]+."), -starts_with("5.")) %>% 
-    mutate(OldPriorYear = str_trim(OldPriorYear)) %>% 
+    #mutate(OldPriorYear = str_trim(OldPriorYear)) %>% 
     gather(key = "facet", value = 'indicator', -OldPriorYear) %>% 
     group_by(OldPriorYear, facet) %>% 
-    summarise(qty = sum(indicator)) #%>% 
+    summarise(qty = sum(indicator)) %>% 
+  ungroup()
     #complete(OldPriorYear = as.character(seq(from = min(as.integer(tb_merged_matrix$OldPriorYear)), to = max(as.integer(tb_merged_matrix$OldPriorYear)))), facet)
     #complete(OldPriorYear = full_seq(OldPriorYear), 1)
     #complete(OldPriorYear = as.character(full_seq(as.integer(OldPriorYear), 1)), facet)
 
+#saveRDS(tb_heat_years, "tb_heat_years.rds")
 
 tb_heat_years <-
   tb_heat_years %>% 
     right_join(tb_full_years, by = c("OldPriorYear", "facet"))
 
+tb_heat_years[is.na(tb_heat_years)] <- 0
+
 tb_heat_years %>% 
   filter(startsWith(facet, "4."))
 
 ggplot(tb_heat_years %>% 
-         filter(startsWith(facet, "4.")), aes(OldPriorYear, facet)) +
-  geom_tile(aes(fill = qty)) 
+    filter(startsWith(facet, "4.")), aes(OldPriorYear, facet)) +
+  geom_tile(aes(fill = qty)) +
+  #scale_fill_gradient(low = "#CCFFFF", high = "#3399FF") +
+  scale_fill_distiller(palette = "Blues", direction = 1) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  labs(x = "Годы", y = "Основания")
+
   
+library(d3heatmap)
 
 # full_years <- as.character(full_seq(as.integer(tb_heat_years$OldPriorYear), 1))
 # full_facets <- str_subset(names(tb_merged_matrix), "[1-9]+.")
@@ -78,8 +88,6 @@ tb_heat_problems <-
     summarise(qty = sum(indicator.p * indicator.s))
 
 d3heatmap(mtcars %>% select(-model), scale = "column", colors = "Spectral")
-
-tb_heat_years[is.na(tb_heat_years)] <- 0
 
 t4 <- tb_heat_years %>% 
   filter(startsWith(facet, "4.")) %>% 

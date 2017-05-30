@@ -90,7 +90,7 @@ ggplot(med_dat2_rat,
   scale_fill_manual(values=rat_colors) + 
   #scale_x_discrete(expand = c(.5, 0)) +
   scale_y_continuous(limits = c(-20, 100), labels=NULL, breaks = NULL) +
-  geom_text(aes(label=value), size = 3, position = position_stack(vjust = 0.5)) +
+  geom_text(aes(label=round(value)), size = 3, position = position_stack(vjust = 0.5)) +
   coord_polar(start = pi)
 
 
