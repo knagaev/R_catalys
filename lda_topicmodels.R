@@ -1,6 +1,11 @@
 library(topicmodels)
 
 
+psdocs$title <- str_replace_all(psdocs$title, '[[:punct:]]',' ')
+psdocs$description <- str_replace_all(psdocs$description, '[[:punct:]]',' ')
+psdocs$claims <- str_replace_all(psdocs$claims, '[[:punct:]]',' ')
+psdocs$abstract <- str_replace_all(psdocs$abstract, '[[:punct:]]',' ')
+
 sc <- SimpleCorpus(VectorSource(rbind(as.vector(psdocs$title),
                                       as.vector(psdocs$description),
                                       as.vector(psdocs$claims),
