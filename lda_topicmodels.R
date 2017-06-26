@@ -29,6 +29,7 @@ wordCorpus <- Corpus(DataframeSource(data.frame(psdocs[2:4])))
 wordCorpus <- tm_map(wordCorpus, removePunctuation)
 wordCorpus <- tm_map(wordCorpus, removeNumbers)
 wordCorpus <- tm_map(wordCorpus, content_transformer(tolower))
+wordCorpus <- tm_map(wordCorpus, content_transformer(stemDocument), "russian")
 dtm <- TermDocumentMatrix(wordCorpus)
 
 ap_lda <- LDA(dtm, k = 10, control = list(seed = 1234))
@@ -47,3 +48,4 @@ sc <- tm_map(sc, content_transformer(function(x) iconv(enc2utf8(x), sub = "byte"
 psdocs %>% 
   filter(str_detect(title, "aотнотносительное"))
 
+stemDocument(psdocs$title[1], language = "english")
