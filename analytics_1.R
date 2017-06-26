@@ -8,7 +8,7 @@ library(stringr)
 library(tibble)
 library(ggplot2)
 
-mm_file_name <- "ВТД.Collection_Matrix_Baseline4.xlsx"
+mm_file_name <- "data\ВТД.Collection_Matrix_ver_0_16.xlsx"
 facets_file_name <- "facets_VTD.csv"
 
 #mm_col_types <- readxl:::xlsx_col_types(mm_file_name)
