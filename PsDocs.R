@@ -19,7 +19,7 @@ get_propvar <- function(xml_file)
   claims <- unlist(xml_text(xml_find_all(xml, "claims")))
   abstract <- unlist(xml_text(xml_find_all(xml, "abstract")))
 
-  tibble(
+  data.frame(
     id = id,
     title = ifelse(length(title) > 0, title, ""),
     description = ifelse(length(description) > 0, description, ""),
