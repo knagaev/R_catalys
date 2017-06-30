@@ -1,6 +1,7 @@
 library(xml2)
 library(stringr)
 library(tidyverse) #load second!
+library(forcats)
 library(tidytext)
 library(ggplot2)
 library(tm)
@@ -57,24 +58,34 @@ dim(dtm)
 dtms <- removeSparseTerms(dtm, sparse=0.97)
 dtmr <- DocumentTermMatrix(wordCorpus, control=list(wordLengths=c(3, 20), bounds = list(global = c(5,45))))
 
-lda_dtm <- dtmr
+lda_dtm <- dtm
 
 summary(col_sums(lda_dtm))
 
 term_tfidf <- tapply(lda_dtm$v/row_sums(lda_dtm)[lda_dtm$i], lda_dtm$j, mean) * log2(nDocs(lda_dtm)/col_sums(lda_dtm > 0))
-
+dim(term_tfidf)
 summary(term_tfidf)
 
 lda_dtm <- lda_dtm[, term_tfidf >= 0.01 & term_tfidf < 0.1]
 lda_dtm <- lda_dtm[row_sums(lda_dtm) > 0, ]
 summary(col_sums(lda_dtm))
 dim(lda_dtm)
+lda_term_tfidf <- tapply(lda_dtm$v/row_sums(lda_dtm)[lda_dtm$i], lda_dtm$j, mean) * log2(nDocs(lda_dtm)/col_sums(lda_dtm > 0))
 
-df <- data.frame(term_tfidf)
+df <- data.frame(term_tfidf = term_tfidf, term = dtm$dimnames[["Terms"]])
+df$id <- rownames(df)
+df %>% 
+  arrange((term_tfidf)) %>% 
+  head(1000) %>% 
+  tail(20)
+
 ggplot(df, aes(term_tfidf)) + geom_histogram(binwidth = 0.001)
+qplot(lda_term_tfidf, geom="histogram")
+
 dtmr$dimnames[["Terms"]][which(term_tfidf > 0.1)]
 
-ap_lda <- LDA(lda_dtm, k = 7, control = list(seed = 1234))
+
+ap_lda <- LDA(lda_dtm, k = 5, control = list(seed = 1234))
 
 ap_lda <- jss_TM[["VEM_fixed"]]
 
@@ -82,13 +93,18 @@ ap_topics <- tidy(ap_lda, matrix = "beta")
 ap_topics
 
 ap_top_terms <- ap_topics %>%
+#  mutate(term = factor(term), 
+#         n = as.numeric(factor(topic))) %>% 
+#  mutate(rep_term = paste(c(rep(' ', n - 1), term), collapse=''),
+#         sort_term = factor(rep_term, levels=ap_top_terms[order(beta), 'rep_term'])
+#         ) %>% 
   group_by(topic) %>%
   top_n(10, beta) %>%
   ungroup() %>%
   arrange(topic, -beta)
 
 ap_top_terms %>%
-  mutate(term = reorder(term, beta)) %>%
+  mutate(term = fct_reorder2(term, topic, beta, .desc = FALSE)) %>%
   ggplot(aes(term, beta, fill = factor(topic))) +
   geom_col(show.legend = FALSE) +
   facet_wrap(~ topic, scales = "free") +
@@ -105,10 +121,19 @@ beta_spread
 ap_documents <- tidy(ap_lda, matrix = "gamma")
 ap_documents
 
+max_topics <- ap_documents %>% 
+  group_by(document) %>% 
+  filter(gamma == max(gamma))
+
 tidy(lda_dtm) %>%
-  filter(document == "0000038403_U1_20040610_RU") %>%
+  filter(document == "0002529781_C2_20140927_RU") %>%
   arrange(desc(count))
 
+ap_documents %>% 
+  filter(document == "0002529781_C2_20140927_RU")
+
+
+  
 
 k <- 7
 SEED = 1234
